@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS para la transición de desplazamiento */
+/* .transition-slow {
+    transition: all 0.5s ease;
+    transform: translateX(-100%);
+}
+
+.appear {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.appear-activated {
+    opacity: 1;
+    transform: translateX(0);
+} */
