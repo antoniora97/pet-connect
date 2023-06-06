@@ -1,7 +1,6 @@
 <div class="flex flex-col h-screen px-2 py-2 bg-gray-100">
     <form wire:submit.prevent="createPost" enctype="multipart/form-data" class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
         <h2 class="mb-4 text-2xl font-bold text-gray-800">Nueva publicación</h2>
-        <h2 class="mb-4 text-2xl font-bold text-gray-800">Nueva publicación</h2>
 
         <div class="mb-4">
             <label for="content" class="text-gray-700">Contenido:</label>
@@ -9,10 +8,9 @@
             @error('content') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
         </div>
 
-        <div class="mb-4">
-            <label for="image" class="text-gray-700">Imagen:</label>
-            <div class="w-full bg-white/30 backdrop-blur-sm">
-
+        <div class="h-32 mb-4 border-2 border-dashed">
+            <div class="flex items-center justify-center w-full h-full">
+                <label for="image" class="flex items-center justify-center w-full h-full p-5 text-gray-700 bg-white/30 backdrop-blur"><i class="flex text-xl fi fi-rr-upload"></i></label>
             </div>
             <input type="file" id="image" wire:model="image" class="hidden">
             @error('image') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
