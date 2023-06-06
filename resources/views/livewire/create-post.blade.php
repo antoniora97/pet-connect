@@ -1,6 +1,7 @@
 <div class="flex flex-col h-screen px-2 py-2 bg-gray-100">
     <form wire:submit.prevent="createPost" enctype="multipart/form-data" class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
         <h2 class="mb-4 text-2xl font-bold text-gray-800">Nueva publicación</h2>
+        <h2 class="mb-4 text-2xl font-bold text-gray-800">Nueva publicación</h2>
 
         <div class="mb-4">
             <label for="content" class="text-gray-700">Contenido:</label>
