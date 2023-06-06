@@ -1,5 +1,5 @@
-<div class="flex flex-col h-screen px-2 py-2 bg-gray-100">
-    <form wire:submit.prevent="createPost" enctype="multipart/form-data" class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+<div class="flex flex-col h-screen px-2 bg-gray-100">
+    <form wire:submit.prevent="createPost" enctype="multipart/form-data" class="w-full max-w-md p-6 mb-48 bg-white rounded-lg shadow-lg">
         <h2 class="mb-4 text-2xl font-bold text-gray-800">Nueva publicación</h2>
 
         <div class="mb-4">
@@ -8,15 +8,21 @@
             @error('content') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
         </div>
 
-        <div class="h-32 mb-4 border-2 border-dashed">
-            <div class="flex items-center justify-center w-full h-full">
-                <label for="image" class="flex items-center justify-center w-full h-full p-5 text-gray-700 bg-white/30 backdrop-blur"><i class="flex text-xl fi fi-rr-upload"></i></label>
+        <div class="mb-4 border-2 border-black border-dashed rounded-lg bg-slate-200">
+            <div class="flex items-center justify-center w-full h-full p-4 @if($image) p-0 @endif">
+                <label for="image" class="flex items-center justify-center w-full h-full text-gray-700">
+                    @if($image)
+                        <img src="{{ $image->temporaryUrl() }}" class="object-contain h-full w-fit" alt="Vista previa de la imagen">
+                    @else
+                        <i class="flex text-xl fi fi-rr-upload"></i>
+                    @endif
+                </label>
             </div>
             <input type="file" id="image" wire:model="image" class="hidden">
             @error('image') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
         </div>
 
-        <div class="flex items-center justify-center">
+        <div class="flex items-center justify-center @if($image) mb-16 @endif">
             <button type="submit" class="px-4 py-2 font-semibold text-white rounded-lg bg-gradient-to-r from-sky-300/70 to-purple-400/70">Crear Post</button>
         </div>
     </form>

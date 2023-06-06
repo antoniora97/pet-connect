@@ -26,18 +26,18 @@
     @livewire('layout.header-component')
 
     {{-- posts section --}}
-    <div class="px-1 mb-12">
+    <div class="px-1 pb-20">
         @foreach ($posts as $post)
         {{-- post card --}}
         <div class="relative w-full mb-2 text-white post rounded-xl">
             {{-- post img --}}
             <a href="{{ route('post.detail', $post->id) }}">
-                <img src="{{asset('storage/images/' . $post->img_path)}}" alt="Imagen del post" class="object-cover w-full h-full rounded-xl">
+                <img src="{{asset('storage/post-images/' . $post->img_path)}}" alt="Imagen del post" class="object-cover w-full h-full rounded-xl">
             </a>
             {{-- pet profile --}}
             <a href={{ route('profile.pet', $post->pet->id)}} class="absolute flex items-center gap-2 bottom-16 left-2">
                 <div class="flex-shrink-0 w-8 h-8 overflow-hidden rounded-full">
-                    <img src="{{ asset('storage/profile-images/' . $post->pet->profile_img) }}" alt="Imagen de perfil" class="object-cover w-full h-full">
+                    <img src="{{ asset('storage/pet-profile-images/' . $post->pet->profile_img) }}" alt="Imagen de perfil" class="object-cover w-full h-full">
                 </div>
                 <p class="font-bold text-white">{{$post->pet->username}}</p>
             </a>
@@ -68,15 +68,10 @@
         @endforeach
     </div>
 
-    <div class="flex-grow mb-12"></div>
-
-    <div class="fixed bottom-0 left-0 w-full p-4 bg-gray-900">
-        <nav class="flex items-center justify-between">
-            <a href={{ route('index') }} class="p-4 text-2xl text-white hover:text-gray-300"><i
-                    class="fi fi-rr-home"></i></a>
-            <a href={{ route('post.create') }} class="p-4 text-2xl text-white hover:text-gray-300"><i
-                    class="fi fi-rr-edit"></i></a>
-            <a href={{ route('profile.pet', session('pet')->id)}} class="p-4 text-2xl text-white hover:text-gray-300"><i class="fi fi-rr-user"></i></a>
-        </nav>
+    <div class="fixed flex items-center justify-between gap-8 px-5 py-3 text-2xl rounded-full backdrop-blur text-slate-50 bottom-5 bg-gradient-to-r from-sky-300/50 to-purple-400/50" style="left: 50%; transform: translateX(-50%);">
+        <a href={{ route('index') }}><i class="fi fi-rr-home"></i></a>
+        <a href={{ route('post.create') }}><i class="fi fi-rr-add"></i></a>
+        <a href={{ route('post.create') }}><i class="fi fi-rr-calendar"></i></a>
+        <a href={{ route('profile.pet', session('pet')->id)}}><i class="fi fi-rr-user"></i></a>
     </div>
 </div>
