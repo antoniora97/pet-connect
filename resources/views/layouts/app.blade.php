@@ -26,9 +26,24 @@
         .scrollbar::-webkit-scrollbar {
             display: none;
         }
+
+        ::-webkit-scrollbar {
+            width: 0.5em;
+            height: 10px;
+            background-color: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 2px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
     </style>
 </head>
-<body class="h-full scrollbar">
+<body class="scrollbar">
 
     {{$slot}}
     @livewireScripts

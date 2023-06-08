@@ -77,11 +77,11 @@
 
         {{-- Biographie --}}
         @if (auth()->user()->id == $user->id)
-        <div class="relative p-2 mt-2 overflow-scroll bg-sky-200/50 rounded-xl scrollbar">
-            <form wire:submit.prevent="setBiographie" enctype="multipart/form-data" class="rounded-lg">
+        <div class="relative p-2 mt-2 bg-sky-200/50 rounded-xl">
+            <form wire:submit.prevent="setBiographie" class="rounded-lg">
                 <div class="scrollbar">
                     <label for="biographie" class="font-semibold">Biografía</label>
-                    <textarea id="biographie" wire:model="biographie" maxlength="80" class="w-full bg-transparent border-none rounded outline-none resize-none focus:border-none scrollbar"></textarea>
+                    <textarea id="biographie" wire:model="biographie" maxlength="80" class="w-full bg-transparent border-none rounded outline-none resize-none h-fit focus:border-none scrollbar"></textarea>
                     @error('biographie')<span class="text-red-500">{{ $message }}</span>@enderror
                 </div>
 
@@ -94,7 +94,7 @@
             @if($biographie)
             <div class="relative p-2 mt-2 bg-sky-200/50 rounded-xl">
                 <h2 class="font-semibold">Biografía</h2>
-                <textarea id="biographie" wire:model="biographie" maxlength="80" class="w-full bg-transparent border-none rounded outline-none resize-none focus:border-none scrollbar" disabled></textarea>
+                <textarea id="biographie" wire:model="biographie" maxlength="50" class="w-full bg-transparent border-none rounded outline-none resize-none focus:border-none scrollbar" disabled></textarea>
             </div>
             @endif
         @endif
@@ -120,7 +120,7 @@
                 @endif
             </div>
             {{-- Pets section --}}
-            <div class="overflow-scroll scrollbar">
+            <div class="pb-2 overflow-x-scroll">
                 <div class="flex items-center @if(count($pets)>=4) justify-between @endif gap-2">
                     @foreach ($pets as $pet)
                     <div class="flex flex-col items-center justify-center">
