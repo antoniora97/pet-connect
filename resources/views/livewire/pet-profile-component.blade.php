@@ -1,12 +1,14 @@
 <div class="relative w-full h-screen lg:w-3/5 lg:m-auto @if($showFollowers || $showFollowing) overflow-hidden @endif">
     {{-- Header --}}
     <div class="px-3 bg-white">
-        <div class="relative flex items-center justify-between border-b">
+        <div class="relative flex items-center justify-between border-b py-2">
             <h1 class="font-semibold first-letter:capitalize">{{$pet->name}}</h1>
-            <button id="header-btn"><i class="flex py-2 fi fi-rr-menu-dots"></i></button>
+            @if (session('pet')->id == $pet->id)
+            <button id="header-btn"><i class="flex fi fi-rr-menu-dots"></i></button>
+            @endif
         </div>
         <div id="actions" class="absolute left-0 z-30 flex flex-col hidden w-full h-full px-3 rounded-tl-lg rounded-bl-lg rounded-br-lg lg:w-3/5 lg:left-52 backdrop-blur bg-white/30">
-            <a href="#" class="block py-1 bg-white border-b">Editar perfil</a>
+            <a href="{{ route('pet.profile.edit', $pet->id)}}" class="block py-1 bg-white border-b">Editar perfil</a>
             <a href="#" class="block py-1 bg-white border-b">Eliminar cuenta</a>
         </div>
     </div>

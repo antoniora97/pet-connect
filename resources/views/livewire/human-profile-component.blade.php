@@ -23,7 +23,9 @@
     <div class="flex items-center justify-between py-2">
         {{-- <button onclick="history.back()" class="text-xl"><i class="flex fi fi-rr-angle-left"></i></button> --}}
         <h1 class="w-full font-semibold text-center">Perfil de humano</h1>
-        <button id="bg-img-submit" wire:click="logout" class="absolute text-xl right-2"><i class="flex fi fi-sr-power"></i></button>
+        @if (session('pet')->user_id == $user->id)
+            <button id="bg-img-submit" wire:click="logout" class="absolute text-xl right-2"><i class="flex fi fi-sr-power"></i></button>
+        @endif
     </div>
 
     {{-- Background image --}}
