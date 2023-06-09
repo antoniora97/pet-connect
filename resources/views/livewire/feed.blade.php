@@ -1,4 +1,4 @@
-<div>
+<div class="sm:w-3/5 sm:m-auto lg:w-2/5">
 
     <style>
         header a.active {

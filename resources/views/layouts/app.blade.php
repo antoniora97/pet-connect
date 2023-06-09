@@ -43,7 +43,7 @@
         }
     </style>
 </head>
-<body class="scrollbar">
+<body class="scrollbar scroll-smooth">
 
     {{$slot}}
     @livewireScripts
