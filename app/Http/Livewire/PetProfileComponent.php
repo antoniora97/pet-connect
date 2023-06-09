@@ -19,6 +19,7 @@ class PetProfileComponent extends Component
     public $profile_image;
     public $showFollowers;
     public $showFollowing;
+    public $confirmDeleteModal;
     protected $listeners = ['refreshComponent' => '$refresh'];
 
     public function mount ($petId) {
@@ -26,41 +27,35 @@ class PetProfileComponent extends Component
         $this->showProfileImgLabel = true;
         $this->showFollowers = false;
         $this->showFollowing = false;
+        $this->confirmDeleteModal = false;
     }
 
     public function openFollowers () {
         $this->showFollowers = true;
+        $this->confirmDeleteModal = false;
     }
 
     public function closeFollowers () {
         $this->showFollowers = false;
+        $this->confirmDeleteModal = false;
     }
 
     public function openFollowing () {
         $this->showFollowing = true;
+        $this->confirmDeleteModal = false;
     }
 
     public function closeFollowing () {
         $this->showFollowing = false;
+        $this->confirmDeleteModal = false;
     }
-
-    // public function followPet ($petId) {
-    //     $pet = Pet::find($petId);
-    //     Follow::create(['pet_id' => $pet->id, 'pet_id_following' => $this->pet->id]);
-    //     $this->emit("refreshComponent");
-    // }
-
-    // public function unfollowPet ($petId) {
-    //     $pet = Pet::find($petId);
-    //     Follow::where('pet_id', $pet->id)->where('pet_id_following', $this->pet->id)->delete();
-    //     $this->emit("refreshComponent");
-    // }
 
     public function followPet ($petFollowerId, $petFollowedId) {
         $petFollower = Pet::find($petFollowerId);
         $petFollowed = Pet::find($petFollowedId);
         Follow::create(['pet_id' => $petFollower->id, 'pet_id_following' => $petFollowed->id]);
         $this->emit("refreshComponent");
+        $this->confirmDeleteModal = false;
     }
 
     public function unfollowPet ($petFollowerId, $petFollowedId) {
@@ -68,13 +63,8 @@ class PetProfileComponent extends Component
         $petFollowed = Pet::find($petFollowedId);
         Follow::where('pet_id', $petFollower->id)->where('pet_id_following', $petFollowed->id)->delete();
         $this->emit("refreshComponent");
+        $this->confirmDeleteModal = false;
     }
-
-    // public function reverseUnfollowPet($petId) {
-    //     $pet = Pet::find($petId);
-    //     Follow::where('pet_id', $this->pet->id)->where('pet_id_following', $pet->id)->delete();
-    //     $this->emit("refreshComponent");
-    // }
 
     public function setProfileImage () {
         if ($this->profile_image != null) {
@@ -82,18 +72,37 @@ class PetProfileComponent extends Component
             $this->pet->save();
         }
         $this->showProfileImgLabel = true;
+        $this->confirmDeleteModal = false;
     }
 
     public function hiddenProfileImgLabel () {
         $this->showProfileImgLabel = false;
+        $this->confirmDeleteModal = false;
     }
 
     public function redirectToPerson () {
         return redirect()->to(route('profile.human', $this->pet->user->id));
     }
 
-    public function render()
-    {
+    public function openConfirmDelete() {
+        $this->confirmDeleteModal = true;
+    }
+
+    public function closeConfirmDelete () {
+        $this->confirmDeleteModal = false;
+    }
+
+    public function deletePet () {
+        $pet = $this->pet;
+        $index = $this->pet->user->pets->search(function ($item) use ($pet) {
+            return $item->id !== $pet->id;
+        });
+        session()->put('pet', $this->pet->user->pets->get($index));
+        $this->pet->delete();
+        return redirect()->to(route('profile.human', $this->pet->user_id));
+    }
+
+    public function render() {
         $this->following = $this->pet->following;
         $this->followers = $this->pet->followers;
         return view('livewire.pet-profile-component');

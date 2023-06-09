@@ -58,7 +58,6 @@ class HumanProfileComponent extends Component {
             $this->user->save();
         }
         $this->showBgImgLabel = true;
-
     }
 
     public function hiddenBgImgLabel () {

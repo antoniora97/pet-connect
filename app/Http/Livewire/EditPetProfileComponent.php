@@ -8,10 +8,7 @@ use Livewire\WithFileUploads;
 
 class EditPetProfileComponent extends Component
 {
-    use WithFileUploads;
-
     public $pet;
-    public $profile_img;
     public $name;
     public $username;
     public $biographie;
@@ -20,22 +17,28 @@ class EditPetProfileComponent extends Component
         $this->pet = Pet::find($petId);
         $this->name = $this->pet->name;
         $this->username = $this->pet->username;
+        $this->biographie = $this->pet->biographie;
     }
 
-    public function edit () {
+    public function updatePet () {
         $this->validate([
-            'name' => 'required|min:1|max:12',
-            'username' => 'required|min:1|max:10|unique:pets|regex:/^[a-zA-Z0-9_-]+$/',
-            'biographie' => 'max:15'
+            'name' => 'required|max:10|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$/',
+            'username' => 'required|max:10|regex:/^[a-zA-Z0-9_-]+$/|unique:pets,username,' . $this->pet->id,
+            'biographie' => 'max:80'
         ], [
-            'name.min' => 'La longitud mínima del nombre es de :min caracter.',
-            'name.max' => 'La longitud máxima del nombre es de :max caracteres.',
-            'username.min' => 'La longitud mínima del nombre de usuario es de :min caracter.',
-            'username.max' => 'La longitud máxima del nombre de usuario es de :max caracteres.',
-            'username.unique' => 'Este nombre de usuario ya está en uso.',
-            'username.regex' => 'El nombre de usuario no puede contener espacios.',
-            'biographie.max' => 'La biografía no puede contener más de :max caracteres.'
+            'name.required' => 'Introduce un nombre.',
+            'name.max' => 'El nombre no puede superar :max caracteres.',
+            'username.required' => 'Introduce un nombre.',
+            'username.max' => 'El nombre de usuario no puede superar :max caracteres.',
+            'username.regex' => 'El nombre de usuario no puede contener espacios, tildes ni caracteres especiales.',
+            'username.unique' => 'Este nombre de usuario ya está en uso.'
         ]);
+
+        $this->pet->name = $this->name;
+        $this->pet->username = $this->username;
+        $this->pet->biographie = $this->biographie;
+        $this->pet->save();
+        return redirect()->to(route('profile.pet', $this->pet->id));
     }
 
     public function render()

@@ -1,17 +1,27 @@
 <div class="relative w-full h-screen lg:w-3/5 lg:m-auto @if($showFollowers || $showFollowing) overflow-hidden @endif">
     {{-- Header --}}
     <div class="px-3 bg-white">
-        <div class="relative flex items-center justify-between border-b py-2">
+        <div class="relative flex items-center justify-between py-2 border-b">
             <h1 class="font-semibold first-letter:capitalize">{{$pet->name}}</h1>
             @if (session('pet')->id == $pet->id)
             <button id="header-btn"><i class="flex fi fi-rr-menu-dots"></i></button>
             @endif
         </div>
         <div id="actions" class="absolute left-0 z-30 flex flex-col hidden w-full h-full px-3 rounded-tl-lg rounded-bl-lg rounded-br-lg lg:w-3/5 lg:left-52 backdrop-blur bg-white/30">
-            <a href="{{ route('pet.profile.edit', $pet->id)}}" class="block py-1 bg-white border-b">Editar perfil</a>
-            <a href="#" class="block py-1 bg-white border-b">Eliminar cuenta</a>
+            <a href="{{ route('pet.profile.edit', $pet->id)}}" class="py-1 bg-white border-b">Editar perfil</a>
+            @if (count($pet->user->pets)>1) <button wire:click='openConfirmDelete' class="py-1 bg-white border-b text-start">Eliminar cuenta</button> @endif
         </div>
     </div>
+
+    @if ($confirmDeleteModal)
+        <div class="py-2 text-sm">
+            <p class="text-center">Vas a borrar tu cuenta de forma permanente</p>
+            <div class="flex justify-around mt-4">
+                <button wire:click='deletePet' class="px-2 py-1 rounded-lg to-purple-400/30 bg-gradient-to-r from-sky-400/30">Confirmar</button>
+                <button wire:click='closeConfirmDelete' class="px-2 py-1 rounded-lg to-slate-400/30 bg-gradient-to-r from-red-400/50">Cancelar</button>
+            </div>
+        </div>
+    @endif
 
     <div class="relative bg-white shadow-lg rounded-br-xl rounded-bl-xl">
         {{-- Profile image --}}
