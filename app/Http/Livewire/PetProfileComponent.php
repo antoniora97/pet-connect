@@ -44,23 +44,37 @@ class PetProfileComponent extends Component
         $this->showFollowing = false;
     }
 
-    public function followPet ($petId) {
-        $pet = Pet::find($petId);
-        Follow::create(['pet_id' => $pet->id, 'pet_id_following' => $this->pet->id]);
+    // public function followPet ($petId) {
+    //     $pet = Pet::find($petId);
+    //     Follow::create(['pet_id' => $pet->id, 'pet_id_following' => $this->pet->id]);
+    //     $this->emit("refreshComponent");
+    // }
+
+    // public function unfollowPet ($petId) {
+    //     $pet = Pet::find($petId);
+    //     Follow::where('pet_id', $pet->id)->where('pet_id_following', $this->pet->id)->delete();
+    //     $this->emit("refreshComponent");
+    // }
+
+    public function followPet ($petFollowerId, $petFollowedId) {
+        $petFollower = Pet::find($petFollowerId);
+        $petFollowed = Pet::find($petFollowedId);
+        Follow::create(['pet_id' => $petFollower->id, 'pet_id_following' => $petFollowed->id]);
         $this->emit("refreshComponent");
     }
 
-    public function unfollowPet ($petId) {
-        $pet = Pet::find($petId);
-        Follow::where('pet_id', $pet->id)->where('pet_id_following', $this->pet->id)->delete();
+    public function unfollowPet ($petFollowerId, $petFollowedId) {
+        $petFollower = Pet::find($petFollowerId);
+        $petFollowed = Pet::find($petFollowedId);
+        Follow::where('pet_id', $petFollower->id)->where('pet_id_following', $petFollowed->id)->delete();
         $this->emit("refreshComponent");
     }
 
-    public function reverseUnfollowPet($petId) {
-        $pet = Pet::find($petId);
-        Follow::where('pet_id', $this->pet->id)->where('pet_id_following', $pet->id)->delete();
-        $this->emit("refreshComponent");
-    }
+    // public function reverseUnfollowPet($petId) {
+    //     $pet = Pet::find($petId);
+    //     Follow::where('pet_id', $this->pet->id)->where('pet_id_following', $pet->id)->delete();
+    //     $this->emit("refreshComponent");
+    // }
 
     public function setProfileImage () {
         if ($this->profile_image != null) {

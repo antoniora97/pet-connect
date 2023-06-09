@@ -120,7 +120,7 @@
                 @endif
             </div>
             {{-- Pets section --}}
-            <div class="pb-2 overflow-x-scroll">
+            <div class="pb-2 overflow-x-scroll @if(count($pets) < 4) scrollbar @endif">
                 <div class="flex items-center @if(count($pets)>=4) justify-between @endif gap-2">
                     @foreach ($pets as $pet)
                     <div class="flex flex-col items-center justify-center">

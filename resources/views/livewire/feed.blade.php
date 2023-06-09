@@ -71,9 +71,9 @@
     </div>
 
     <div class="fixed flex items-center justify-between gap-8 px-5 py-3 text-2xl rounded-full backdrop-blur text-slate-50 bottom-5 bg-gradient-to-r from-sky-300/50 to-purple-400/50" style="left: 50%; transform: translateX(-50%);">
-        {{-- <a href={{ route('index') }}><i class="fi fi-rr-home"></i></a> --}}
-        <a href={{ route('post.create') }}><i class="fi fi-rr-calendar"></i></a>
+        <a href={{ route('index') }}><i class="fi fi-rr-home"></i></a>
         <a href={{ route('post.create') }}><i class="fi fi-rr-add"></i></a>
+        <a href={{ route('post.create') }}><i class="fi fi-rr-calendar"></i></a>
         <a href={{ route('profile.pet', session('pet')->id)}}><i class="fi fi-rr-user"></i></a>
     </div>
 </div>

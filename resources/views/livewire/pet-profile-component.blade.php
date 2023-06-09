@@ -40,11 +40,10 @@
         {{-- Actions: follow/unfollow, edit, message --}}
         @if (session('pet')->id != $pet->id)
         <div class="flex justify-center gap-2 px-5 mt-2">
-                {{-- <a href="{{ route('pet.profile.edit', $pet->id) }}" class="px-3 py-1 text-xs text-white bg-sky-500 rounded-xl">Editar perfil</a> --}}
                 @if ($pet->isFollower(session('pet')->id))
-                    <button class="px-2 py-1 rounded bg-gradient-to-r from-sky-400/40 to-purple-400/40" wire:click="unfollowPet({{session('pet')->id}})"><i class="flex fi fi-rr-delete-user"></i></button>
+                    <button class="px-2 py-1 rounded bg-gradient-to-r from-sky-400/40 to-purple-400/40" wire:click="unfollowPet({{session('pet')->id}}, {{$pet->id}})"><i class="flex fi fi-rr-delete-user"></i></button>
                 @else
-                    <button class="px-2 py-1 rounded bg-gradient-to-r from-sky-400/40 to-purple-400/40" wire:click="followPet({{session('pet')->id}})"><i class="flex fi fi-rr-following"></i></button>
+                    <button class="px-2 py-1 rounded bg-gradient-to-r from-sky-400/40 to-purple-400/40" wire:click="followPet({{session('pet')->id}}, {{$pet->id}})"><i class="flex fi fi-rr-following"></i></button>
                 @endif
                 <button class="px-2 py-1 rounded bg-gradient-to-r from-sky-400/40 to-purple-400/40"><i class="fi fi-rr-envelope-plus"></i></button>
                 <button wire:click="redirectToPerson" class="px-2 py-1 rounded bg-gradient-to-r from-sky-400/40 to-purple-400/40"><i class="flex fi fi-rr-comment-user"></i></button>
@@ -65,11 +64,6 @@
                 <p class="font-semibold">{{ count($pet->following) }}</p>
                 <p class="text-sm tracking-tight text-slate-400">Siguiendo</p>
             </button>
-            {{-- <p>|</p> --}}
-            {{-- <a class="flex flex-col items-center">
-                <p class="font-semibold">{{ count($pet->likes) }}</p>
-                <p class="text-sm tracking-tight text-slate-400">Me gusta</p>
-            </a> --}}
         </div>
 
         {{-- Pet biographie --}}
@@ -84,11 +78,15 @@
     </div>
 
     {{-- Posts section --}}
-    <div id="posts" class="grid grid-cols-3 gap-1 px-1 pb-20 mt-1 lg:m-auto">
+    <div id="posts" class="grid grid-cols-3 gap-1 px-1 pt-1 pb-20 place-items-center lg:m-auto">
         @if (count($pet->posts) > 0)
-        @foreach ($pet->posts as $post)
-            <img src="{{ asset('storage/post-images/' . $post->img_path )}}" class="object-cover w-full h-32 rounded-lg sm:h-64 sm:w-full lg:h-52" alt="">
-        @endforeach
+            @foreach ($pet->posts as $post)
+                <a href="{{ route('post.detail', $post->id)}}" class="w-full h-28 sm:h-64 sm:w-full lg:h-52">
+                    <img src="{{ asset('storage/post-images/' . $post->img_path )}}" class="object-cover w-full h-full rounded-lg" alt="">
+                </a>
+            @endforeach
+        @else
+            <p class="col-span-3 pt-12">Sin fotos subidas</p>
         @endif
     </div>
 
@@ -107,40 +105,53 @@
                                 <img src="{{ asset('storage/pet-profile-images/' . $pet->profile_img)}}" class="w-8 h-8 rounded-full" alt="">
                                 <p>{{$pet->username}}</p>
                             </a>
-                            <button class="px-2 py-1 rounded bg-gradient-to-r from-sky-400/40 to-purple-400/40" wire:click="unfollowPet({{$pet->id}})"><i class="flex fi fi-rr-delete-user"></i></button>
+                            @if (session('pet')->id != $pet->id)
+                                @if ($pet->isFollower(session('pet')->id))
+                                    <button class="px-2 py-1 rounded bg-gradient-to-r from-sky-400/40 to-purple-400/40" wire:click="unfollowPet({{session('pet')->id}}, {{$pet->id}})"><i class="flex fi fi-rr-delete-user"></i></button>
+                                @else
+                                    <button class="px-2 py-1 rounded bg-gradient-to-r from-sky-400/40 to-purple-400/40" wire:click="followPet({{session('pet')->id}}, {{$pet->id}})"><i class="flex fi fi-rr-following"></i></button>
+                                @endif
+                            @endif
                         </div>
                     @endforeach
                 @else
-                    <p class="px-3 py-1">Sin seguidores.</p>
+                    <p class="px-3 py-1">Sin seguidores</p>
                 @endif
             </div>
         </div>
     </div>
     @endif
 
+    {{-- Following section --}}
     @if ($showFollowing)
-    <div class="fixed top-0 left-0 w-full h-full bg-white/30 backdrop-blur">
-        <div class="absolute z-50 p-2 px-3 rounded-lg shadow-xl bg-slate-400/30" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
-            <button wire:click='closeFollowing' class="absolute top-0 right-0"><i class="fi fi-sr-cross-small"></i></button>
-            <h4 class="w-full px-3 py-1 text-center border-b border-black ">Seguidos</h4>
-            <div class="flex flex-col w-full gap-2 px-1 py-2 overflow-scroll max-h-48 scrollbar">
-                @if (count($following) > 0)
-                    @foreach ($following as $following)
-                        <?php $pet = App\Models\Pet::find($following['pet_id_following']); ?>
-                        <div class="flex justify-between gap-12">
-                            <a href="{{route('profile.pet', $pet->id)}}" class="flex items-center gap-2">
-                                <img src="{{ asset('storage/pet-profile-images/' . $pet->profile_img)}}" class="w-8 h-8 rounded-full" alt="">
-                                <p>{{$pet->username}}</p>
-                            </a>
-                            <button class="px-2 py-1 rounded bg-gradient-to-r from-sky-400/40 to-purple-400/40" wire:click="reverseUnfollowPet({{$pet->id}})"><i class="flex fi fi-rr-delete-user"></i></button>
-                        </div>
-                    @endforeach
-                @else
-                    <p class="px-3 py-1">No sigues a nadie</p>
-                @endif
+        <div class="fixed top-0 left-0 w-full h-full bg-white/30 backdrop-blur">
+            <div class="absolute z-50 p-2 px-3 rounded-lg shadow-xl bg-slate-400/30" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                <button wire:click='closeFollowing' class="absolute top-0 right-0"><i class="fi fi-sr-cross-small"></i></button>
+                <h4 class="w-full px-3 py-1 text-center border-b border-black ">Seguidos</h4>
+                <div class="flex flex-col w-full gap-2 px-1 py-2 overflow-scroll max-h-48 scrollbar">
+                    @if (count($following) > 0)
+                        @foreach ($following as $following)
+                            <?php $pet = App\Models\Pet::find($following['pet_id_following']); ?>
+                            <div class="flex justify-between gap-12">
+                                <a href="{{route('profile.pet', $pet->id)}}" class="flex items-center gap-2">
+                                    <img src="{{ asset('storage/pet-profile-images/' . $pet->profile_img)}}" class="w-8 h-8 rounded-full" alt="">
+                                    <p>{{$pet->username}}</p>
+                                </a>
+                                @if (session('pet')->id != $pet->id)
+                                    @if ($pet->isFollower(session('pet')->id))
+                                        <button class="px-2 py-1 rounded bg-gradient-to-r from-sky-400/40 to-purple-400/40" wire:click="unfollowPet({{session('pet')->id}}, {{$pet->id}})"><i class="flex fi fi-rr-delete-user"></i></button>
+                                    @else
+                                        <button class="px-2 py-1 rounded bg-gradient-to-r from-sky-400/40 to-purple-400/40" wire:click="followPet({{session('pet')->id}}, {{$pet->id}})"><i class="flex fi fi-rr-following"></i></button>
+                                    @endif
+                                @endif
+                            </div>
+                        @endforeach
+                    @else
+                        <p class="px-3 py-1">Sin seguidos</p>
+                    @endif
+                </div>
             </div>
         </div>
-    </div>
     @endif
 
     {{-- Nav --}}
@@ -149,7 +160,6 @@
         <a href={{ route('post.create') }}><i class="fi fi-rr-add"></i></a>
         <a href={{ route('post.create') }}><i class="fi fi-rr-calendar"></i></a>
         <a href={{ route('profile.pet', session('pet')->id)}}><i class="fi fi-rr-user"></i></a>
-
     </div>
 
     <script>
