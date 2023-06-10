@@ -12,10 +12,11 @@ use App\Http\Livewire\PasswordForgot;
 use App\Http\Livewire\PasswordReset;
 use App\Http\Livewire\PetProfileComponent;
 use App\Http\Livewire\PetRegister;
-use App\Http\Livewire\PostDetailComponent;
+
 use App\Http\Livewire\Posts\CommentsComponent;
 use App\Http\Livewire\Posts\CreatePostComponent;
 use App\Http\Livewire\Posts\EditPostComponent;
+use App\Http\Livewire\Posts\PostDetailComponent;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -29,20 +30,18 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/human-profile/{userId}', HumanProfileComponent::class)->name('profile.human');
+    Route::get('/edit-human-profile/{userId}', EditHumanProfileComponent::class)->name('human.profile.edit');
     Route::get('/pet-profile/{petId}', PetProfileComponent::class)->name('profile.pet');
+    Route::get('/edit-pet-profile/{petId}', EditPetProfileComponent::class)->name('pet.profile.edit');
+    Route::get('/pet-register', PetRegister::class)->name('register.pet');
     Route::post('logout', LogoutController::class)->name('logout');
 
-    Route::get('/pet-register', PetRegister::class)->name('register.pet');
 
     Route::get('/feed', Feed::class)->name('feed');
-    Route::get('/create-post', CreatePostComponent::class)->name('post.create');
-    Route::get('/edit-post/{postId}', EditPostComponent::class)->name('post.edit');
-    Route::get('/comments/{postId}', CommentsComponent::class)->name('post.comments');
-    Route::get('/post/{postId}', PostDetailComponent::class)->name('post.detail');
-
-
     Route::get('/discover', DiscoverComponent::class)->name('discover');
 
-    Route::get('/edit-human-profile/{userId}', EditHumanProfileComponent::class)->name('human.profile.edit');
-    Route::get('/edit-pet-profile/{petId}', EditPetProfileComponent::class)->name('pet.profile.edit');
+    Route::get('/create-post', CreatePostComponent::class)->name('post.create');
+    Route::get('/edit-post/{postId}', EditPostComponent::class)->name('post.edit');
+    // Route::get('/comments/{postId}', CommentsComponent::class)->name('post.comments');
+    Route::get('/post/{postId}', PostDetailComponent::class)->name('post.detail');
 });

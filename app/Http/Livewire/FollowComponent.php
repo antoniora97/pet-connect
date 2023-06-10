@@ -6,8 +6,7 @@ use App\Models\Follow;
 use App\Models\Pet;
 use Livewire\Component;
 
-class FollowComponent extends Component
-{
+class FollowComponent extends Component {
 
     public function isFollowed() {
         return $this->follows()->where('pet_id', session('pet')->id)->exists();

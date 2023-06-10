@@ -53,7 +53,7 @@
             {{-- post comments --}}
             <div class="absolute flex items-center gap-2 p-2 text-white rounded-bl-lg rounded-br-lg right-2 bottom-2 bg-white/30 backdrop-blur">
                 <p class="text-sm">{{ $post->comments->count() }}</p>
-                <a class="text-3xl" href="{{ route('post.comments', $post->id) }}"><i class="flex fi fi-rr-comment"></i></a>
+                <a class="text-3xl" href="{{ route('post.detail', $post->id) }}"><i class="flex fi fi-rr-comment"></i></a>
             </div>
             {{-- post content --}}
             <div class="absolute @if($post->content) w-48 @else w-fit @endif p-2 rounded-lg sm:w-fit bottom-2 left-2 bg-white/30 backdrop-blur">
