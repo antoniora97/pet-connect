@@ -1,6 +1,9 @@
-<div class="flex flex-col items-center h-full px-2 py-2 overflow-scroll bg-gray-100 scrollbar">
+<div class="flex flex-col items-center h-screen px-2 py-2 overflow-scroll bg-gray-100 scrollbar">
     <form wire:submit.prevent="createPost" class="w-full max-w-md p-6 mb-24 bg-white rounded-lg shadow-lg">
-        <h2 class="mb-4 text-2xl font-bold text-gray-800">Nueva publicación</h2>
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-2xl font-bold text-gray-800">Crear publicación</h2>
+            <button wire:click='cancelCreate'><i class="flex fi fi-sr-cross"></i></button>
+        </div>
 
         <div class="mb-4 border-2 border-black border-dashed rounded-lg bg-slate-200">
             <div class="flex items-center justify-center w-full h-full p-4 @if($image) p-0 @endif">

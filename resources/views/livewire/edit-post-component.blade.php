@@ -1,24 +1,22 @@
-<div class="max-w-4xl p-2 mx-auto ">
-    @if ($successMessage)
-        <div class="p-4 text-green-800 bg-green-200">{{ $successMessage }}</div>
-    @endif
-    <form wire:submit.prevent="updatePost" enctype="multipart/form-data" class="p-8 bg-white rounded-lg shadow-lg">
-        <h2 class="mb-4 text-2xl font-bold">Editar Publicación</h2>
+<div class="flex flex-col items-center h-screen px-2 py-2 overflow-scroll bg-gray-100 scrollbar">
+    <form wire:submit.prevent="updatePost" class="w-full max-w-md p-6 mb-24 bg-white rounded-lg shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-2xl font-bold text-gray-800">Editar publicación</h2>
+            <button wire:click='cancelEdit'><i class="flex fi fi-sr-cross"></i></button>
+        </div>
+
+        <div class="mb-4 rounded-lg">
+            <img src="{{ asset('storage/post-images/' . $post->img_path) }}" alt="" class="object-cover w-full h-full rounded-lg">
+        </div>
+
+        <div class="mb-4">
+            <label for="content" class="text-gray-700">Contenido:</label>
+            <textarea id="content" wire:model="content" class="w-full p-2 bg-gray-100 border border-gray-300 rounded-lg outline-none resize-none scrollbar" rows="2" maxlength="50"></textarea>
+            @error('content') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+        </div>
 
         <div class="flex items-center justify-center">
-            <img src="{{ asset('storage/images/' . $post->img_path) }}" alt="" class="object-cover w-full h-full">
-        </div>
-
-        <div class="mt-4 mb-4">
-            <label for="content" class="block font-semibold">Contenido:</label>
-            <textarea id="content" wire:model="content" class="w-full px-4 py-2 border border-gray-300 rounded"></textarea>
-            @error('content')
-                <span class="text-red-500">{{ $message }}</span>
-            @enderror
-        </div>
-
-        <div class="flex justify-end">
-            <button type="submit" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600">Guardar</button>
+            <button type="submit" class="px-4 py-2 font-semibold text-white rounded-lg bg-gradient-to-r from-sky-300/70 to-purple-400/70">Editar publicación</button>
         </div>
     </form>
 </div>

@@ -2,7 +2,7 @@
 
 use Carbon\Carbon;
 
-function formatFecha($fecha) {
+function dateFormat($fecha) {
     $now = Carbon::now();
     $fecha = Carbon::parse($fecha);
     Carbon::setLocale('es');

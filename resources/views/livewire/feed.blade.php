@@ -1,4 +1,4 @@
-<div class="sm:w-3/5 sm:m-auto lg:w-2/5">
+<div class="sm:w-4/5 sm:m-auto">
 
     <style>
         header a.active {
@@ -42,7 +42,7 @@
                 <p class="font-bold text-white">{{$post->pet->username}}</p>
             </a>
             {{-- post likes --}}
-            <div class="absolute flex items-center gap-2 p-2 text-white rounded-tl-lg rounded-tr-lg right-2 bg-white/30 backdrop-blur" style="bottom: 3.4rem;">
+            <div class="absolute flex items-center gap-2 p-2 text-white rounded-tl-lg rounded-tr-lg right-2" style="bottom: 3.4rem;">
                 <p class="text-sm">{{  $post->likes->count() }}</p>
                 @if ($pet->likes()->where('post_id', $post->id)->first())
                     <button wire:click="dislikePost({{ $post->id }})" class="text-3xl text-amber-700"><i class="flex fi fi-ss-bone"></i></button>
@@ -51,14 +51,14 @@
                 @endif
             </div>
             {{-- post comments --}}
-            <div class="absolute flex items-center gap-2 p-2 text-white rounded-bl-lg rounded-br-lg right-2 bottom-2 bg-white/30 backdrop-blur">
+            <div class="absolute flex items-center gap-2 p-2 text-white rounded-bl-lg rounded-br-lg right-2 bottom-2">
                 <p class="text-sm">{{ $post->comments->count() }}</p>
                 <a class="text-3xl" href="{{ route('post.detail', $post->id) }}"><i class="flex fi fi-rr-comment"></i></a>
             </div>
             {{-- post content --}}
             <div class="absolute @if($post->content) w-48 @else w-fit @endif p-2 rounded-lg sm:w-fit bottom-2 left-2 bg-white/30 backdrop-blur">
                 @if($post->content) <p class="mb-1 font-semibold leading-none break-all truncate">{{ $post->content }}</p> @endif
-                <p class="text-sm font-semibold">{{ formatFecha($post->created_at) }}</p>
+                <p class="text-sm font-semibold">{{ dateFormat($post->created_at) }}</p>
             </div>
             {{-- edit post --}}
             @if (session('pet')->id == $post->pet->id)

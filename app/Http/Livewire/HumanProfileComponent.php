@@ -35,7 +35,7 @@ class HumanProfileComponent extends Component {
 
     public function changePet (Pet $pet) {
         session()->put('pet', $pet);
-        return redirect()->intended(route('profile.pet', $pet->id));
+        return redirect()->intended(route('feed'));
     }
 
     public function toggleListOfPets () {

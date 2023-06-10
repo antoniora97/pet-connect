@@ -16,6 +16,10 @@ class EditPostComponent extends Component {
         $this->content = $this->post->content;
     }
 
+    public function cancelEdit () {
+        return redirect()->to(route('feed'));
+    }
+
     public function updatePost()
     {
         (new PostComponent())->updatePost($this->post->id, $this->content);

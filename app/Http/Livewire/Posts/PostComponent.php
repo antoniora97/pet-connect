@@ -53,6 +53,11 @@ class PostComponent extends Component
         }
     }
 
+    public function deleteComment ($commentId) {
+        $comment = Comment::find($commentId);
+        $comment->delete();
+    }
+
     public function render()
     {
         return view('livewire.post');

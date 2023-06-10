@@ -33,6 +33,10 @@ class CreatePostComponent extends Component
         redirect()->to(route('feed'));
     }
 
+    public function cancelCreate () {
+        return redirect()->to(route('feed'));
+    }
+
     public function render () {
         return view('livewire.create-post');
     }
