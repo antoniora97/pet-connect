@@ -25,7 +25,7 @@
             {{-- pet info --}}
             <div class="flex items-center justify-between">
                 <a class="flex items-center gap-3" href={{ route("profile.pet", $pet->id) }}>
-                    <img src="{{asset('storage/pet-profile-images/' . $pet->profile_img)}}" alt="" class="w-12 h-12 rounded-full">
+                    <img src="{{asset('storage/pet-profile-images/' . $pet->profile_img)}}" alt="" class="object-cover w-12 h-12 rounded-full">
                     <p class="font-semibold">{{$pet->username}}</p>
                 </a>
                 @if ($pet->isFollower(session('pet')->id))

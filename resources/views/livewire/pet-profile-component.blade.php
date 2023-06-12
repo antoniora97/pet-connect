@@ -39,7 +39,7 @@
         </form>
         @else
         <div class="flex items-center justify-center w-full pt-5 rounded-full">
-            <img src="{{ asset('storage/pet-profile-images/' . $pet->profile_img)}}" alt="" class="w-24 h-24 p-1 rounded-full outline outline-slate-200">
+            <img src="{{ asset('storage/pet-profile-images/' . $pet->profile_img)}}" alt="" class="object-cover w-24 h-24 p-1 rounded-full outline outline-slate-200">
         </div>
         @endif
 
@@ -114,7 +114,7 @@
                         <?php $pet = App\Models\Pet::find($follower['pet_id']); ?>
                         <div class="flex justify-between gap-12">
                             <a href="{{route('profile.pet', $pet->id)}}" class="flex items-center gap-2">
-                                <img src="{{ asset('storage/pet-profile-images/' . $pet->profile_img)}}" class="w-8 h-8 rounded-full" alt="">
+                                <img src="{{ asset('storage/pet-profile-images/' . $pet->profile_img)}}" class="object-cover w-8 h-8 rounded-full" alt="">
                                 <p>{{$pet->username}}</p>
                             </a>
                             @if (session('pet')->id != $pet->id)
@@ -146,7 +146,7 @@
                             <?php $pet = App\Models\Pet::find($following['pet_id_following']); ?>
                             <div class="flex justify-between gap-12">
                                 <a href="{{route('profile.pet', $pet->id)}}" class="flex items-center gap-2">
-                                    <img src="{{ asset('storage/pet-profile-images/' . $pet->profile_img)}}" class="w-8 h-8 rounded-full" alt="">
+                                    <img src="{{ asset('storage/pet-profile-images/' . $pet->profile_img)}}" class="object-cover w-8 h-8 rounded-full" alt="">
                                     <p>{{$pet->username}}</p>
                                 </a>
                                 @if (session('pet')->id != $pet->id)

@@ -56,9 +56,11 @@ class EventsComponent extends Component
         $raceId = $this->race_id;
         $users = User::whereHas('pets', function ($query) use ($raceId) {
             $query->where('race_id', $raceId);
-        })->get();
+        })->with('pets')->get();
 
-        Notification::send($users, new EventCreatedNotification($event));
+        foreach ($users as $user) {
+            Notification::send($user, new EventCreatedNotification($event));
+        }
 
         return redirect()->to(route('admin.dashboard'));
     }

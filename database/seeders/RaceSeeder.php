@@ -24,8 +24,28 @@ class RaceSeeder extends Seeder
         ]);
 
         Race::create([
-            'id' => RaceEnum::BODEGUERO,
-            'name' => RaceEnum::BODEGUERO->name()
+            'id' => RaceEnum::PERRO_BARBILLA,
+            'name' => RaceEnum::PERRO_BARBILLA->name()
+        ]);
+
+        Race::create([
+            'id' => RaceEnum::SHAR_PEI,
+            'name' => RaceEnum::SHAR_PEI->name()
+        ]);
+
+        Race::create([
+            'id' => RaceEnum::COCKER,
+            'name' => RaceEnum::COCKER->name()
+        ]);
+
+        Race::create([
+            'id' => RaceEnum::AMERICAN_STANDFORD,
+            'name' => RaceEnum::AMERICAN_STANDFORD->name()
+        ]);
+
+        Race::create([
+            'id' => RaceEnum::YORKSHIRE,
+            'name' => RaceEnum::YORKSHIRE->name()
         ]);
     }
 }

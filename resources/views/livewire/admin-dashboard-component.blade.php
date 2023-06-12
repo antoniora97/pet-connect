@@ -19,9 +19,10 @@
             background-color: #f5f5f5;
         }
     </style>
-    <h1 class="p-4 text-2xl font-bold text-center">Bienvenido, {{ $user->person1_name }}</h1>
 
-    <a href="{{route('event.create')}}" class="p-2 rounded-lg w-fit bg-gradient-to-r from-sky-400/30 to-purple-400/30">Crear eventos</a>
+    <h1 class="p-4 text-2xl font-bold text-center">Bienvenido, {{ $user->person1_name }} <button id="bg-img-submit" wire:click="logout" class="text-xl"><i class="flex fi fi-sr-power"></i></button></h1>
+
+    <a href="{{route('event.create')}}" class="p-2 rounded-lg w-fit bg-gradient-to-r from-sky-400/30 to-purple-400/30">Crear evento</a>
 
     <div class="w-full px-2 mt-5">
         <table>
@@ -45,13 +46,15 @@
 
                     <?php $participants = App\Http\Livewire\AdminDashboardComponent::getParticipants($event->id); ?>
                     <td>
-                        @foreach ($participants as $participant)
-                            @foreach ($participant->pets as $pet)
-                                @if ($pet->race_id == $event->race_id)
+                        @if ($participants)
+                            @foreach ($participants as $participant)
+                                @foreach ($participant->pets as $pet)
+                                    @if ($pet->race_id == $event->race_id)
                                     {{$pet->name}}
-                                @endif
+                                    @endif
+                                @endforeach
                             @endforeach
-                        @endforeach
+                        @endif
                     </td>
 
                     <td>

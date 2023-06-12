@@ -1,3 +1,4 @@
+
 <div class="flex flex-col justify-center tracking-tighter scrollbar lg:px-80">
     {{-- Estilos para ocultar la barra de desplazamiento en navegadores compatibles --}}
     <style>
@@ -24,7 +25,7 @@
         {{-- <button onclick="history.back()" class="text-xl"><i class="flex fi fi-rr-angle-left"></i></button> --}}
         <h1 class="w-full font-semibold text-center">Perfil de humano</h1>
         @if (session('pet')->user_id == $user->id)
-            <button id="bg-img-submit" wire:click="logout" class="absolute text-xl right-2"><i class="flex fi fi-sr-power"></i></button>
+            <button id="bg-img-submit" wire:click="logout" class="absolute text-xl right-2 lg:right-80"><i class="flex fi fi-sr-power"></i></button>
         @endif
     </div>
 
@@ -59,7 +60,7 @@
             <input type="file" id="profile-image" wire:model="profile_image" class="hidden">
         </form>
         @else
-        <div class="absolute flex items-center justify-center -top-8 left-5">
+        <div class="absolute flex items-center justify-center -top-8 left-5 lg:left-96">
             <img src="{{asset('storage/human-profile-images/' . $user->profile_img)}}" alt="profile image" class="object-cover w-16 h-16 rounded-full">
         </div>
         @endif
@@ -127,7 +128,7 @@
                     @foreach ($pets as $pet)
                     <div class="flex flex-col items-center justify-center">
                         <a href="{{route('profile.pet', $pet->id)}}" class="relative flex items-center justify-center w-20 h-20 rounded-xl bg-slate-700/60">
-                            <img src="{{asset('storage/pet-profile-images/' . $pet->profile_img)}}" alt="" class="w-full h-full rounded-xl">
+                            <img src="{{asset('storage/pet-profile-images/' . $pet->profile_img)}}" alt="" class="object-cover w-full h-full rounded-xl">
                         </a>
                         <div class="flex flex-col items-center justify-center">
                             <p class="font-semibold capitalize">{{$pet->name}}</p>
@@ -169,7 +170,7 @@
             <button wire:click="changePet({{$pet->id}})" class="flex items-center justify-between w-full h-16">
                 <div class="flex items-center gap-2">
                     <div class="w-12 h-12">
-                        <img src="{{asset('storage/pet-profile-images/' . $pet->profile_img)}}" class="w-full h-full rounded-full" alt="">
+                        <img src="{{asset('storage/pet-profile-images/' . $pet->profile_img)}}" class="object-cover w-full h-full rounded-full" alt="">
                     </div>
                     <p>{{$pet->username}}</p>
                 </div>

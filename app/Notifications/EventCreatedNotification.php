@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Enum\GenderEnum;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
@@ -40,17 +41,50 @@ class EventCreatedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         $subject = "Invitación a " . $this->event->title;
+
         $greeting = 'Hola ' . $notifiable->person1_name;
-        // @if ($notifiable->person2_name)
+        if ($notifiable->person2_name) {
+            $greeting = $greeting . " y " . $notifiable->person2_name;
+        }
+
+        $countPets = 0;
+        $petIndex = -1;
+        foreach ($notifiable->pets as $pet) {
+            if ($pet->race_id == $this->event->race_id) {
+                $countPets = $countPets + 1;
+                $petIndex = $notifiable->pets->search($pet);
+            }
+        }
+
+        $body = '';
+        if ($countPets==1) {
+            if ($notifiable->pets[$petIndex]->gender->name == GenderEnum::MALE->name()) {
+                $body = "Tu perro " . ucfirst($notifiable->pets[$petIndex]->name) . " ha sido invitado al siguiente evento: ";
+            } else {
+                $body = "Tu perra " . ucfirst($notifiable->pets[$petIndex]->name) . " ha sido invitada al siguiente evento: ";
+            }
+        } else {
+            $body = "Tu perros ";
+            foreach ($notifiable->pets as $pet) {
+                if ($pet->race_id == $this->event->race_id) {
+                    if ($notifiable->pets->search($pet) == count($notifiable->pets)-1) {
+                        $body = $body . "y ". ucfirst($pet->name);
+                    } else if ($notifiable->pets->search($pet) == count($notifiable->pets)-2) {
+                        $body = $body . ucfirst($pet->name) . " ";
+                    } else {
+                        $body = $body . ucfirst($pet->name) . ", ";
+                    }
+                }
+            }
+            $body = $body . " han sido invitados al siguiente evento: ";
+        }
+        $body = $body . $this->event->title . " el " . $this->event->date . " a las " . $this->event->time . ".";
+
 
         return (new MailMessage)
-            ->subject('Invitación a ' . $this->event->title)
-            ->greeting('Hola ' . $notifiable->person1_name)
-            ->line('Se ha creado un evento nuevo');
-        // return (new MailMessage)
-        //             ->line('The introduction to the notification.')
-        //             ->action('Notification Action', url('/'))
-        //             ->line('Thank you for using our application!');
+            ->subject($subject)
+            ->greeting($greeting)
+            ->line($body);
     }
 
     /**

@@ -31,6 +31,9 @@ class Login extends Component
         ];
 
         if (Auth::attempt($credentials)) {
+            if (auth()->user()->id == 99) {
+                return redirect()->to(route('admin.dashboard'));
+            }
             // Inicio de sesión exitoso, redirigir a la página deseada
             session()->put('pet', auth()->user()->pets[0]);
             return redirect(route('profile.human', auth()->user()->id));

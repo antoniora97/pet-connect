@@ -21,7 +21,7 @@ class UserSeeder extends Seeder {
             'biographie' => "Compartiendo risas y aventuras, abrazando cada momento juntos. 🌿🌼",
             'email' => 'aa@g.com',
             'password' => Hash::make('password')
-        ]);
+        ])->assignRole('user');
 
         User::create([
             'id' => 2,
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder {
             'biographie' => "Amor incondicional en cuatro patas. Mi vida con mascotas. 🐾❤️",
             'email' => 's@g.com',
             'password' => Hash::make('password')
-        ]);
+        ])->assignRole('user');
 
         User::create([
             'id' => 3,
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder {
             'biographie' => "Aventuras diarias con mis peludos compañeros. ¡Mascotas en acción! 🐶🐱",
             'email' => 'j@g.com',
             'password' => Hash::make('password')
-        ]);
+        ])->assignRole('user');
 
         User::create([
             'id' => 4,
@@ -54,7 +54,7 @@ class UserSeeder extends Seeder {
             'biographie' => "Risas, travesuras y mucho cariño. La vida junto a mis adorables mascotas. 🐾❤️",
             'email' => 'g@g.com',
             'password' => Hash::make('password')
-        ]);
+        ])->assignRole('user');
 
         User::create([
             'id' => 5,
@@ -65,7 +65,7 @@ class UserSeeder extends Seeder {
             'biographie' => "Compañeros leales y travesuras interminables. Mi vida está llena de mascotas. 🐾😄",
             'email' => 'a@g.com',
             'password' => Hash::make('password')
-        ]);
+        ])->assignRole('user');
 
         User::create([
             'id' => 6,
@@ -76,7 +76,18 @@ class UserSeeder extends Seeder {
             'biographie' => "El hogar más feliz con mis peludos consentidos. Amor puro y travesuras aseguradas. 🏡🐾",
             'email' => 'm@g.com',
             'password' => Hash::make('password')
-        ]);
+        ])->assignRole('user');
+
+        User::create([
+            'id' => 7,
+            'person1_name' => 'Cintia Espinosa',
+            'person2_name' => '',
+            'profile_img' => 'default.png',
+            'bg_image' => 'default.jpg',
+            'biographie' => "El hogar más feliz con mis peludos consentidos. Amor puro y travesuras aseguradas. 🏡🐾",
+            'email' => 'c@g.com',
+            'password' => Hash::make('password')
+        ])->assignRole('user');
 
         User::create([
             'id' => 99,
@@ -87,6 +98,6 @@ class UserSeeder extends Seeder {
             'biographie' => "",
             'email' => 'admin@admin.com',
             'password' => Hash::make('password')
-        ]);
+        ])->assignRole('admin');
     }
 }

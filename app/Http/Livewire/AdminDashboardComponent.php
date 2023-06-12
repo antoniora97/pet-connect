@@ -27,11 +27,18 @@ class AdminDashboardComponent extends Component
 
     public function getParticipants ($eventId) {
         $event = Event::find($eventId);
-        $raceId = $event->race_id;
-        $participants = User::whereHas('pets', function ($query) use ($raceId) {
-            $query->where('race_id', $raceId);
-        })->with('pets')->get();
-        return $participants;
+        if ($event) {
+            $raceId = $event->race_id;
+            $participants = User::whereHas('pets', function ($query) use ($raceId) {
+                $query->where('race_id', $raceId);
+            })->with('pets')->get();
+            return $participants;
+        }
+    }
+
+    public function logout() {
+        Auth::logout();
+        return redirect()->to(route('index'));
     }
 
     public function render()

@@ -17,9 +17,9 @@ class CustomAuthMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::id() != 99) {
-            return redirect()->to(route('feed'));
+            redirect()->to(route('feed'));
         }
-        return redirect()->to(route('admin.dashboard'));
-        // return $next($request);
+        redirect()->to(route('admin.dashboard'));
+        return $next($request);
     }
 }

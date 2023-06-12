@@ -3,7 +3,6 @@
 use App\Http\Controllers\LogoutController;
 use App\Http\Livewire\AdminDashboardComponent;
 use App\Http\Livewire\DiscoverComponent;
-use App\Http\Livewire\EditEventComponent;
 use App\Http\Livewire\EditHumanProfileComponent;
 use App\Http\Livewire\EditPetProfileComponent;
 use App\Http\Livewire\EventsComponent;
@@ -16,7 +15,6 @@ use App\Http\Livewire\PasswordReset;
 use App\Http\Livewire\PetProfileComponent;
 use App\Http\Livewire\PetRegister;
 
-use App\Http\Livewire\Posts\CommentsComponent;
 use App\Http\Livewire\Posts\CreatePostComponent;
 use App\Http\Livewire\Posts\EditPostComponent;
 use App\Http\Livewire\Posts\PostDetailComponent;
@@ -30,25 +28,26 @@ Route::middleware('guest')->group(function () {
     Route::get('/password-reset/{token}', PasswordReset::class)->name('password.reset');
 });
 
-
-Route::middleware('custom.auth')->group(function () {
-    Route::get('/human-profile/{userId}', HumanProfileComponent::class)->name('profile.human');
-    Route::get('/edit-human-profile/{userId}', EditHumanProfileComponent::class)->name('human.profile.edit');
-    Route::get('/pet-profile/{petId}', PetProfileComponent::class)->name('profile.pet');
-    Route::get('/edit-pet-profile/{petId}', EditPetProfileComponent::class)->name('pet.profile.edit');
-    Route::get('/pet-register', PetRegister::class)->name('register.pet');
+Route::middleware('auth')->group(function () {
     Route::post('logout', LogoutController::class)->name('logout');
 
+    Route::group(['middleware' => ['role:user']], function () {
+        Route::get('/human-profile/{userId}', HumanProfileComponent::class)->name('profile.human');
+        Route::get('/edit-human-profile/{userId}', EditHumanProfileComponent::class)->name('human.profile.edit');
+        Route::get('/pet-profile/{petId}', PetProfileComponent::class)->name('profile.pet');
+        Route::get('/edit-pet-profile/{petId}', EditPetProfileComponent::class)->name('pet.profile.edit');
+        Route::get('/pet-register', PetRegister::class)->name('register.pet');
 
-    Route::get('/feed', Feed::class)->name('feed');
-    Route::get('/discover', DiscoverComponent::class)->name('discover');
+        Route::get('/feed', Feed::class)->name('feed');
+        Route::get('/discover', DiscoverComponent::class)->name('discover');
 
-    Route::get('/create-post', CreatePostComponent::class)->name('post.create');
-    Route::get('/edit-post/{postId}', EditPostComponent::class)->name('post.edit');
-    Route::get('/post/{postId}', PostDetailComponent::class)->name('post.detail');
-});
+        Route::get('/create-post', CreatePostComponent::class)->name('post.create');
+        Route::get('/edit-post/{postId}', EditPostComponent::class)->name('post.edit');
+        Route::get('/post/{postId}', PostDetailComponent::class)->name('post.detail');
+    });
 
-Route::middleware('checkUser')->group(function () {
-    Route::get('/admin-dashboard', AdminDashboardComponent::class)->name('admin.dashboard');
-    Route::get('/create-event', EventsComponent::class)->name('event.create');
+    Route::group(['middleware' => ['role:admin']], function () {
+        Route::get('/admin-dashboard', AdminDashboardComponent::class)->name('admin.dashboard');
+        Route::get('/create-event', EventsComponent::class)->name('event.create');
+    });
 });
