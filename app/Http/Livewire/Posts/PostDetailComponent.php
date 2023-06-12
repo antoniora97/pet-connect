@@ -14,12 +14,12 @@ class PostDetailComponent extends Component
     public $comment;
     public $comments;
     public $deleteConfirmationModal;
-    protected $listeners = ['refreshComponent' => '$refresh'];
     public $editingComment;
     public $deletingComment;
     public $editedCommentId;
     public $deletingCommentId;
     public $editedCommentContent;
+    protected $listeners = ['refreshComponent' => '$refresh'];
 
     public function mount ($postId) {
         $this->post = Post::find($postId);

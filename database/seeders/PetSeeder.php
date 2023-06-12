@@ -89,5 +89,16 @@ class PetSeeder extends Seeder {
             'gender_id' => GenderEnum::FEMALE,
             'user_id' => 6
         ]);
+
+        Pet::create([
+            'id' => 99,
+            'name' => 'admin pet',
+            'username' => 'admin_pet',
+            'biographie' => '',
+            'profile_img' => 'default.png',
+            'race_id' => RaceEnum::MASTIN,
+            'gender_id' => GenderEnum::FEMALE,
+            'user_id' => 99
+        ]);
     }
 }
