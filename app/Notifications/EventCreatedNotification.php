@@ -4,14 +4,11 @@ namespace App\Notifications;
 
 use App\Enum\GenderEnum;
 use App\Models\Event;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EventCreatedNotification extends Notification
-{
+class EventCreatedNotification extends Notification {
     use Queueable;
 
     protected $event;
@@ -38,8 +35,7 @@ class EventCreatedNotification extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
-    {
+    public function toMail(object $notifiable): MailMessage {
         $subject = "Invitación a " . $this->event->title;
 
         $greeting = 'Hola ' . $notifiable->person1_name;
