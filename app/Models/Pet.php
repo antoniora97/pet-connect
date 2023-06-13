@@ -59,8 +59,4 @@ class Pet extends Model
     public function gender () {
         return $this->belongsTo(Gender::class, 'gender_id');
     }
-
-    public function events () {
-        return $this->belongsToMany(Event::class, 'event_pets');
-    }
 }
