@@ -80,7 +80,8 @@ class EventCreatedNotification extends Notification {
         return (new MailMessage)
             ->subject($subject)
             ->greeting($greeting)
-            ->line($body);
+            ->line($body)
+            ->salutation('Muchas gracias por usar Pet Connect.');
     }
 
     /**
