@@ -21,35 +21,37 @@
 
     <div class="flex flex-col gap-5 px-3 pb-24">
         @foreach ($pets as $pet)
-        <div class="flex flex-col gap-2">
-            {{-- pet info --}}
-            <div class="flex items-center justify-between">
-                <a class="flex items-center gap-3" href={{ route("profile.pet", $pet->id) }}>
-                    <img src="{{asset('storage/pet-profile-images/' . $pet->profile_img)}}" alt="" class="object-cover w-12 h-12 rounded-full">
-                    <p class="font-semibold">{{$pet->username}}</p>
-                </a>
-                @if ($pet->isFollower(session('pet')->id))
-                    <button class="px-2 py-1 bg-gradient-to-r from-sky-400/40 to-purple-400/40" wire:click="unfollowPet({{session('pet')->id}}, {{$pet->id}})"><i class="flex fi fi-rr-delete-user"></i></button>
+        @if (!$pet->isFollower(session('pet')->id))
+            <div class="flex flex-col gap-2">
+                {{-- pet info --}}
+                <div class="flex items-center justify-between">
+                    <a class="flex items-center gap-3" href={{ route("profile.pet", $pet->id) }}>
+                        <img src="{{asset('storage/pet-profile-images/' . $pet->profile_img)}}" alt="" class="object-cover w-12 h-12 rounded-full">
+                        <p class="font-semibold">{{$pet->username}}</p>
+                    </a>
+                    @if ($pet->isFollower(session('pet')->id))
+                        <button class="px-2 py-1 bg-gradient-to-r from-sky-400/40 to-purple-400/40" wire:click="unfollowPet({{session('pet')->id}}, {{$pet->id}})"><i class="flex fi fi-rr-delete-user"></i></button>
+                    @else
+                        <button class="px-2 py-1 bg-gradient-to-r from-sky-400/40 to-purple-400/40" wire:click="followPet({{session('pet')->id}}, {{$pet->id}})"><i class="flex fi fi-rr-following"></i></button>
+                    @endif
+                </div>
+                {{-- pet post images --}}
+                @if (count($pet->posts)!=0)
+                    <div class="flex gap-2 py-2 overflow-x-scroll @if (count($pet->posts)<4) scrollbar @endif">
+                        @foreach ($pet->posts as $post)
+                        <div class="relative flex">
+                            <div class="relative flex items-center justify-center w-24 rounded-lg h-44 bg-slate-700/60">
+                                <img src="{{asset('storage/post-images/' . $post->img_path)}}" alt="" class="object-cover w-full h-full rounded-lg">
+                            </div>
+                            <p class="absolute text-sm font-semibold text-white right-1">{{timeFormat($post->created_at)}}</p>
+                        </div>
+                        @endforeach
+                    </div>
                 @else
-                    <button class="px-2 py-1 bg-gradient-to-r from-sky-400/40 to-purple-400/40" wire:click="followPet({{session('pet')->id}}, {{$pet->id}})"><i class="flex fi fi-rr-following"></i></button>
+                    <p class="text-center first-letter:capitalize">{{$pet->name}} aún no ha subido ninguna foto</p>
                 @endif
             </div>
-            {{-- pet post images --}}
-            @if (count($pet->posts)!=0)
-                <div class="flex gap-2 py-2 overflow-x-scroll @if (count($pet->posts)<4) scrollbar @endif">
-                    @foreach ($pet->posts as $post)
-                    <div class="relative flex">
-                        <div class="relative flex items-center justify-center w-24 rounded-lg h-44 bg-slate-700/60">
-                            <img src="{{asset('storage/post-images/' . $post->img_path)}}" alt="" class="object-cover w-full h-full rounded-lg">
-                        </div>
-                        <p class="absolute text-sm font-semibold text-white right-1">{{timeFormat($post->created_at)}}</p>
-                    </div>
-                    @endforeach
-                </div>
-            @else
-                <p class="text-center first-letter:capitalize">{{$pet->name}} aún no ha subido ninguna foto</p>
             @endif
-        </div>
         @endforeach
     </div>
 

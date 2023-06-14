@@ -105,9 +105,9 @@
     {{-- Followers section --}}
     @if ($showFollowers)
     <div class="fixed top-0 left-0 z-50 w-full h-full bg-white/30 backdrop-blur">
-        <div class="absolute px-3 rounded-lg shadow-xl bg-slate-400/30" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
-            <button wire:click='closeFollowers' class="absolute top-0 right-0"><i class="fi fi-sr-cross-small"></i></button>
-            <h4 class="w-full px-3 py-1 text-center border-b border-black ">Seguidores</h4>
+        <div class="absolute p-2 px-3 rounded-lg shadow-xl bg-slate-200" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <button wire:click='closeFollowers' class="absolute top-0 right-0"><i class="flex text-2xl fi fi-sr-cross-small"></i></button>
+            <h4 class="w-full px-3 py-1 text-center border-b border-black">Seguidores</h4>
             <div class="flex flex-col w-full gap-2 px-1 py-2 overflow-scroll max-h-48 scrollbar">
                 @if (count($followers) > 0)
                     @foreach ($followers as $follower)
@@ -136,10 +136,10 @@
 
     {{-- Following section --}}
     @if ($showFollowing)
-        <div class="fixed top-0 left-0 w-full h-full bg-white/30 backdrop-blur">
-            <div class="absolute z-50 p-2 px-3 rounded-lg shadow-xl bg-slate-400/30" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                <button wire:click='closeFollowing' class="absolute top-0 right-0"><i class="fi fi-sr-cross-small"></i></button>
-                <h4 class="w-full px-3 py-1 text-center border-b border-black ">Seguidos</h4>
+        <div class="fixed top-0 left-0 z-50 w-full h-full bg-white/30 backdrop-blur">
+            <div class="absolute p-2 px-3 rounded-lg shadow-xl bg-slate-200" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                <button wire:click='closeFollowing' class="absolute top-0 right-0"><i class="flex text-2xl fi fi-sr-cross-small"></i></button>
+                <h4 class="w-full px-3 py-1 text-center border-b border-black">Seguidos</h4>
                 <div class="flex flex-col w-full gap-2 px-1 py-2 overflow-scroll max-h-48 scrollbar">
                     @if (count($following) > 0)
                         @foreach ($following as $following)
