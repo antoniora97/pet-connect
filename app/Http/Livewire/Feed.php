@@ -5,8 +5,6 @@ namespace App\Http\Livewire;
 use App\Http\Livewire\Posts\PostComponent;
 use App\Models\Pet;
 use App\Models\Post;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\URL;
 use Livewire\Component;
 
 class Feed extends Component

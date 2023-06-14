@@ -25,11 +25,6 @@ class HumanProfileComponent extends Component {
 
     public function mount ($userId) {
         $this->user = User::find($userId);
-
-        if ($this->user->id == 99) {
-            redirect()->to(route('admin.dashboard'));
-        }
-
         $this->isOpenListOfPets = false;
         $this->pets = $this->user->pets;
         $this->biographie = $this->user->biographie;

@@ -56,7 +56,7 @@ class HumanRegister extends Component {
             'profile_img' => 'default.png',
             'bg_image' => 'default.jpg',
             'password' => Hash::make($this->password)
-        ]);
+        ])->assignRole('user');
 
         Auth::login($user, true);
 

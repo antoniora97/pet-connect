@@ -34,7 +34,9 @@
     <form wire:submit.prevent="setBgImage" class="relative w-full h-48 bg-slate-300">
         <img src="{{asset('storage/human-bg-images/' . $user->bg_image)}}" alt="" class="object-cover w-full h-full">
         @if ($showBgImgLabel)
-        <label wire:click="hiddenBgImgLabel" id="bg-img-label" for="bg-image" class="absolute p-2 rounded-full bg-slate-400/20 top-2 right-2 backdrop-blur"><i class="flex text-lg text-sky-600 fi fi-rr-pencil"></i></label>
+        <label wire:click="hiddenBgImgLabel" id="bg-img-label" for="bg-image" class="absolute p-2 rounded-full bg-slate-400/20 top-2 right-2 backdrop-blur">
+            <i class="flex text-lg text-sky-600 fi fi-rr-pencil"></i>
+        </label>
         @else
         <button wire:click="setBgImage" class="absolute p-2 rounded-full bg-slate-400/20 top-2 right-2 backdrop-blur"><i class="flex text-lg text-sky-600 fi fi-rr-check"></i></button>
         @endif
